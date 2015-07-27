@@ -1,0 +1,12 @@
+{
+	"name": "openvaccineserver",
+	"description": "A minimal D application.",
+	"homepage": "https://www.p2p.or.kr",
+	"copyright": "Copyright © 2015, yezune",
+	"authors": ["yezune"],
+	"dependencies": {
+		"vibe-d": "<=~0.74"
+	},
+	"subConfigurations": { "vibe-d": "libasync"},
+	"versions":["VibeDefaultMain"]
+}

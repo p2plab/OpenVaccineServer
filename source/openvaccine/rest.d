@@ -31,7 +31,7 @@ enum SignatureType{
 }
 
 struct Signature {
-	 SignatureType Type;
+	 string sigType; // [File, Sign]
 	 string data; 
 }
 
@@ -65,7 +65,9 @@ class OpenVaccineImpl : OpenVaccineApi
 override: // usage of this handy D feature is highly recommended
 	ScanData getScanData(string _os, string _version, string _vendor, string _model)
 	{
-		return ScanData.init;
+		ScanData s;
+		s.signatures ~= Signature("File", "FileData");
+		return s;
 	}
 }
 

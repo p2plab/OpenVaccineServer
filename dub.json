@@ -1,8 +1,8 @@
 {
 	"name": "openvaccineserver",
-	"description": "A minimal D application.",
+	"description": "A open vaccine signature server.",
 	"homepage": "https://www.p2p.or.kr",
-	"copyright": "Copyright © 2015, yezune",
+	"copyright": "Copyright © 2015, p2plab",
 	"authors": ["yezune"],
 	"dependencies": {
 		"vibe-d": "<=~0.74"

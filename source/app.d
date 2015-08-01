@@ -12,6 +12,8 @@ void showError(HTTPServerRequest req, HTTPServerResponse res, HTTPServerErrorInf
 
 shared static this()
 {
+	setLogFile("debug.log");
+
 	auto router = new URLRouter;
 	router.get("/", &showHome);
 	router.get("/about", staticTemplate!"about.dt");

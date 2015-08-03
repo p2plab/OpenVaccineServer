@@ -65,7 +65,8 @@ class OpenVaccineImpl : OpenVaccineApi
 override: // usage of this handy D feature is highly recommended
 	ScanData getScanData(string _os, string _version, string _vendor, string _model)
 	{
-		logInfo("getScanData call...");
+
+		logInfo("getScanData call %s, %s, %s, %s", _os, _version, _vendor, _model);
 		ScanData s;
 		s.signatures ~= Signature("File", "FileData");
 		return s;

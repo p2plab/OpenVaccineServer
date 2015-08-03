@@ -6,3 +6,8 @@ docs.json
 __dummy.html
 *.o
 *.obj
+server.csr
+server.key
+server.crt
+server.key.org
+signatures.json

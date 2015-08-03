@@ -5,8 +5,7 @@
 	"copyright": "Copyright © 2015, p2plab",
 	"authors": ["yezune"],
 	"dependencies": {
-		"vibe-d": "~master"
+		"vibe-d": "<=~0.7.23"
 	},
-	"subConfigurations": { "vibe-d": "libasync"},
 	"versions":["VibeDefaultMain"]
 }

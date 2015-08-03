@@ -1,4 +1,5 @@
-/* This example module consists from several small example REST interfaces.
+/* 
+ * This example module consists from several small example REST interfaces.
  * Features are not grouped by topic but by common their are needed. Each example
  * introduces few new more advanced features. Sometimes registration code in module constructor
  * is also important, it is then mentioned in example comment explicitly.
@@ -15,34 +16,26 @@ import vibe.http.server;
 
 import core.time;
 
-/* --------- EXAMPLE 1 ---------- */
+import vibe.data.json;
+import vibe.data.serialization;
 
-/* Very simple REST API interface. No additional configurations is used,
- * all HTTP-specific information is generated based on few conventions.
- *
- * All types are serialized and deserialized automatically by vibe.d framework using JSON.
- */
+import std.file, std.stdio;
 
+alias string sha1;
 
 
-enum SignatureType{
-	File,
-	Sign
+struct Signature{
+	string emailId;
+	string fileId;
+	string fileName;
 }
 
-struct Signature {
-	 string sigType; // [File, Sign]
-	 string data; 
-}
-
-struct ScanData
-{
+struct ScanData{
 	string os;
 	string osVersion;
 	string vendor;
 	string model;
-
-	Signature[] signatures;
+	Signature[sha1] signatures;
 }
 
 @rootPathFromName
@@ -62,14 +55,27 @@ interface OpenVaccineApi
 
 class OpenVaccineImpl : OpenVaccineApi
 {
+	this(immutable string jsonFile){
+		if(exists(jsonFile)){
+			string jsonString = cast(string)read(jsonFile);
+			m_signatures = deserialize!(JsonSerializer, Signature[sha1])(parseJsonString(jsonString));
+		}
+	}
+
+	Signature[sha1] m_signatures;
+
 override: // usage of this handy D feature is highly recommended
 	ScanData getScanData(string _os, string _version, string _vendor, string _model)
 	{
-
 		logInfo("getScanData call %s, %s, %s, %s", _os, _version, _vendor, _model);
-		ScanData s;
-		s.signatures ~= Signature("File", "FileData");
-		return s;
+
+		auto scanData = ScanData(_os, _version, _vendor, _model);
+
+		scanData.signatures = m_signatures ;
+
+		logInfo("scanData: %s", scanData);
+
+		return scanData;
 	}
 }
 

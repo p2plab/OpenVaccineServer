@@ -26,10 +26,12 @@ shared static this()
 	router.registerRestInterface(new OpenVaccineImpl(sigFile));
 
 	auto settings = new HTTPServerSettings;
-	
+
+version(SslMode){
 	settings.sslContext = createSSLContext(SSLContextKind.server);
 	settings.sslContext.useCertificateChainFile("server.crt");
-	settings.sslContext.usePrivateKeyFile("server.key");
+	settings.sslContext.usePrivateKeyFile("server.key");	
+}	
 
 	settings.port = 8080;
 	settings.errorPageHandler = toDelegate(&showError);

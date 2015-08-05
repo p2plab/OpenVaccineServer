@@ -31,10 +31,8 @@ struct Signature{
 }
 
 struct ScanData{
-	string os;
-	string osVersion;
-	string vendor;
-	string model;
+	string title;
+	string ver;
 	Signature[sha1] signatures;
 }
 
@@ -47,7 +45,7 @@ interface OpenVaccineApi
 	 * Answer will be of "application/json" type.
 	 */
 	// signature/os/version/vendor/model
-	// ex => https://HOST/open_vaccine_api/scan_data/android/2.4/samsung/galuxy3
+	// ex => http://localhost:8080/open_vaccine_api/android/2.4/samsung/galuxy3/scan_data
 
 	@path(":os/:version/:vendor/:model/scan_data")
 	ScanData getScanData(string _os, string _version, string _vendor, string _model);
@@ -58,24 +56,24 @@ class OpenVaccineImpl : OpenVaccineApi
 	this(immutable string jsonFile){
 		if(exists(jsonFile)){
 			string jsonString = cast(string)read(jsonFile);
-			m_signatures = deserialize!(JsonSerializer, Signature[sha1])(parseJsonString(jsonString));
+			m_scanData = deserialize!(JsonSerializer, ScanData)(parseJsonString(jsonString));
 		}
 	}
 
-	Signature[sha1] m_signatures;
+	//Signature[sha1] m_signatures;
+	ScanData m_scanData;
 
 override: // usage of this handy D feature is highly recommended
 	ScanData getScanData(string _os, string _version, string _vendor, string _model)
 	{
 		logInfo("getScanData call %s, %s, %s, %s", _os, _version, _vendor, _model);
 
-		auto scanData = ScanData(_os, _version, _vendor, _model);
+		//auto scanData = ScanData("open vaccine signature database","0.01");
+		//scanData.signatures = m_signatures ;
 
-		scanData.signatures = m_signatures ;
+		logInfo("scanData: %s", m_scanData);
 
-		logInfo("scanData: %s", scanData);
-
-		return scanData;
+		return m_scanData;
 	}
 }
 

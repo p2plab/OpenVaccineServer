@@ -68,9 +68,6 @@ override: // usage of this handy D feature is highly recommended
 	{
 		logInfo("getScanData call %s, %s, %s, %s", _os, _version, _vendor, _model);
 
-		//auto scanData = ScanData("open vaccine signature database","0.01");
-		//scanData.signatures = m_signatures ;
-
 		logInfo("scanData: %s", m_scanData);
 
 		return m_scanData;
